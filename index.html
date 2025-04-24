@@ -315,7 +315,7 @@
                     statisticsContainer.innerHTML += `<h3>${tag}</h3>`;
                     for (let i = 1; i <= 5; i++) {
                         const percentage = (tagCounts[tag][i] / total) * 100;
-                        statisticsContainer.innerHTML += `<p>Score ${i}: ${percentage.toFixed(2)}%</p>`;
+                        statisticsContainer.innerHTML += `<p>Score ${i}: <strong>${percentage.toFixed(2)}%<strong></p>`;
                     }
                 } else {
                     statisticsContainer.innerHTML += `<h3>${tag}</h3><p>No data for this tag.</p>`;
