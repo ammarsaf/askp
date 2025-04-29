@@ -5,7 +5,6 @@
 
 # more features plan
 
-- add Malay language toggle
 
 - add tags for questions
     - Marriage – 1, 2, 3, 4, 8, 11, 16, 17, 18, 59

@@ -93,6 +93,61 @@
                 width: 95%;
             }
         }
+
+        .toggle-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 30px;
+        }
+
+        .slider:before {
+        position: absolute;
+        content: "";
+        height: 22px;
+        width: 22px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color:  #7952b3;;
+        }
+
+        input:checked + .slider:before {
+        transform: translateX(30px);
+        }
+
+        span {
+            color: #7952b3;;
+        }
+
+
     </style>
 </head>
 <body>
@@ -128,6 +183,18 @@
         </p>    
         <a href="https://www.rahmaa.org/resources/100-questions-by-imam-magid/"> Source </a>
     </div><br><br>
+
+
+    <div class="toggle-container">
+        <label class="switch">
+            <input type="checkbox" id="languageToggle">
+            <span class="slider"></span>
+        </label>
+            <span>Bahasa Melayu</span>
+        </div>
+    <br>
+
+
     <form id="questionnaire-form">
         <div id="questions-container">
             <!-- Questions will be dynamically added here -->
@@ -140,6 +207,8 @@
         <!-- Statistics will be displayed here -->
     </div>
     </div>
+
+    <!--- Javascript -->
     <script>
         const questions = [
             "What is your concept of marriage?",
@@ -244,9 +313,112 @@
             "If there are members of my family that are not Muslim, that are of a different culture or race, what type of relationship do you want to have with them?"
         ];
 
-        function generateForm() {
+        questionsMalay =    [
+        "Apakah konsep anda tentang perkahwinan?",
+        "Pernahkah anda berkahwin sebelum ini?",
+        "Adakah anda sudah berkahwin sekarang?",
+        "Apakah harapan anda terhadap perkahwinan?",
+        "Apakah matlamat hidup anda? Rancangan jangka panjang dan jangka pendek.",
+        "Kenal pasti tiga perkara yang anda ingin capai dalam masa terdekat.",
+        "Kenal pasti tiga perkara yang anda ingin capai dalam jangka panjang.",
+        "Mengapa anda memilih saya sebagai pasangan anda?",
+        "Apakah peranan agama dalam hidup anda sekarang?",
+        "Adakah anda seorang yang spiritual?",
+        "Apakah pemahaman anda tentang perkahwinan Islam?",
+        "Apakah yang anda harapkan daripada pasangan anda dari segi keagamaan?",
+        "Apakah hubungan anda dengan komuniti Muslim di kawasan anda?",
+        "Adakah anda terlibat dalam sebarang aktiviti Islamik secara sukarela?",
+        "Apakah yang boleh anda tawarkan kepada pasangan anda dari segi spiritual?",
+        "Apakah peranan seorang suami?",
+        "Apakah peranan seorang isteri?",
+        "Adakah anda ingin mengamalkan poligami?",
+        "Apakah hubungan anda dengan keluarga anda?",
+        "Apakah yang anda harapkan dalam hubungan anda dengan keluarga pasangan anda?",
+        "Apakah yang anda harapkan dalam hubungan pasangan anda dengan keluarga anda?",
+        "Adakah sesiapa dalam keluarga anda yang tinggal bersama anda sekarang?",
+        "Adakah anda merancang untuk membenarkan sesiapa dalam keluarga anda tinggal bersama anda pada masa hadapan?",
+        "Jika hubungan saya dengan keluarga anda menjadi keruh, apa yang patut dilakukan?",
+        "Siapakah rakan-rakan anda? Nyatakan sekurang-kurangnya tiga.",
+        "Bagaimana anda mengenali mereka?",
+        "Mengapa mereka menjadi rakan anda?",
+        "Apa yang anda paling suka tentang mereka?",
+        "Apakah hubungan anda dengan mereka selepas berkahwin?",
+        "Adakah anda mempunyai rakan berlainan jantina?",
+        "Apakah tahap hubungan anda dengan mereka sekarang?",
+        "Apakah tahap hubungan anda dengan mereka selepas berkahwin?",
+        "Apakah jenis hubungan yang anda mahu pasangan anda ada dengan rakan-rakan anda?",
+        "Apakah perkara yang anda lakukan pada masa lapang?",
+        "Adakah anda suka menerima tetamu di rumah untuk hiburan?",
+        "Apakah yang anda harapkan daripada pasangan anda apabila rakan anda datang ke rumah?",
+        "Apakah pendapat anda tentang bercakap dalam bahasa lain di rumah yang saya tidak fahami? Dengan rakan? Dengan keluarga?",
+        "Adakah anda suka melancong?",
+        "Bagaimana anda menghabiskan percutian anda?",
+        "Bagaimana anda fikir pasangan anda patut menghabiskan percutian?",
+        "Adakah anda suka membaca?",
+        "Apa yang anda baca?",
+        "Selepas berkahwin, adakah anda akan meluahkan perasaan romantik secara lisan?",
+        "Selepas berkahwin, adakah anda ingin menunjukkan kasih sayang secara terbuka?",
+        "Bagaimana anda menunjukkan kekaguman terhadap seseorang yang anda kenali sekarang?",
+        "Bagaimana anda meluahkan perasaan kepada seseorang yang telah menolong anda?",
+        "Adakah anda suka menulis perasaan anda?",
+        "Jika anda menyakiti seseorang, bagaimana anda memohon maaf?",
+        "Jika seseorang menyakiti anda, bagaimana anda mahu mereka memohon maaf kepada anda?",
+        "Berapa lama masa yang anda ambil sebelum memaafkan seseorang?",
+        "Bagaimana anda membuat keputusan penting dan kurang penting dalam hidup?",
+        "Adakah anda menggunakan bahasa kasar di rumah? Di tempat awam? Dengan keluarga?",
+        "Adakah rakan anda menggunakan bahasa kasar?",
+        "Adakah keluarga anda menggunakan bahasa kasar?",
+        "Bagaimana anda meluahkan kemarahan?",
+        "Bagaimana anda mengharapkan pasangan anda meluahkan kemarahan?",
+        "Apa yang anda lakukan apabila anda marah?",
+        "Bilakah masa yang sesuai untuk memulakan mediasi dalam perkahwinan?",
+        "Apabila berlaku pertikaian dalam perkahwinan anda, sama ada agama atau tidak, bagaimana ia harus diselesaikan?",
+        "Takrifkan penderaan mental, lisan, emosi dan fizikal.",
+        "Apa yang akan anda lakukan jika anda merasakan bahawa anda telah didera?",
+        "Siapa yang akan anda hubungi untuk mendapatkan bantuan jika anda didera?",
+        "Adakah anda menghidap sebarang penyakit kronik atau keadaan kesihatan?",
+        "Adakah anda sanggup menjalani pemeriksaan kesihatan sebelum berkahwin?",
+        "Apakah pemahaman anda tentang kesihatan dan pemakanan yang baik?",
+        "Bagaimana anda menjaga kesihatan dan pemakanan anda sendiri?",
+        "Apakah definisi kekayaan bagi anda?",
+        "Bagaimana anda membelanjakan wang anda?",
+        "Bagaimana anda menyimpan wang anda?",
+        "Bagaimana anda fikir penggunaan wang anda akan berubah selepas berkahwin?",
+        "Adakah anda mempunyai hutang sekarang? Jika ya, bagaimana anda berusaha mengurangkannya?",
+        "Adakah anda menggunakan kad kredit?",
+        "Adakah anda menyokong idea mengambil pinjaman untuk membeli rumah?",
+        "Apakah yang anda harapkan daripada pasangan anda dari segi kewangan?",
+        "Apakah tanggungjawab kewangan anda dalam perkahwinan?",
+        "Adakah anda menyokong isteri yang bekerja?",
+        "Jika ya, bagaimana keluarga dua pendapatan patut mengurus kewangan?",
+        "Adakah anda menggunakan bajet untuk mengurus kewangan sekarang?",
+        "Siapakah orang yang anda bertanggungjawab dari segi kewangan?",
+        "Adakah anda menyokong penggunaan pengasuh dan pembantu rumah?",
+        "Adakah anda mahu mempunyai anak? Jika tidak, mengapa?",
+        "Sejauh mana anda faham, adakah anda mampu mempunyai anak?",
+        "Adakah anda mahu mempunyai anak dalam dua tahun pertama perkahwinan? Jika tidak, bila?",
+        "Adakah anda percaya kepada pengguguran dalam keluarga anda?",
+        "Adakah anda mempunyai anak sekarang?",
+        "Apakah hubungan anda dengan anak-anak anda sekarang?",
+        "Apakah hubungan anda dengan ibu atau bapa kepada anak-anak anda sekarang?",
+        "Apakah hubungan yang anda harapkan antara pasangan anda dengan anak-anak dan ibu atau bapa mereka?",
+        "Apakah kaedah terbaik untuk membesarkan anak-anak?",
+        "Apakah kaedah terbaik untuk mendisiplinkan anak-anak?",
+        "Bagaimana anda dibesarkan?",
+        "Bagaimana anda didisiplinkan?",
+        "Adakah anda percaya kepada rotan atau pukulan untuk anak-anak? Dalam keadaan bagaimana?",
+        "Adakah anda percaya kepada sekolah awam untuk anak-anak anda?",
+        "Adakah anda percaya kepada sekolah Islam untuk anak-anak anda?",
+        "Adakah anda percaya kepada pembelajaran di rumah untuk anak-anak anda? Jika ya, oleh siapa?",
+        "Apakah jenis hubungan yang patut anak-anak anda ada dengan rakan bukan Muslim?",
+        "Adakah anda akan menghantar anak-anak anda melawat keluarga mereka jika mereka tinggal di negeri atau negara lain?",
+        "Apakah jenis hubungan yang anda mahu anak-anak anda ada dengan semua datuk nenek mereka?",
+        "Jika ada ahli keluarga saya yang bukan Muslim, berlainan budaya atau bangsa, apakah jenis hubungan yang anda ingin ada dengan mereka?"
+    ]
+
+        function generateForm(questionChose) {
             const questionsContainer = document.getElementById("questions-container");
-            questions.forEach((question, index) => {
+            questionChose.forEach((question, index) => {
                 const questionDiv = document.createElement("div");
                 questionDiv.classList.add("question");
                 questionDiv.innerHTML = `
@@ -339,8 +511,22 @@
             document.body.appendChild(link);
             link.click();
         }
+        
+        const toggle = document.getElementById("languageToggle");
+        const questionChose = questions;
 
-        window.onload = generateForm;
+        toggle.addEventListener('change', () => {
+            const questionsContainer = document.getElementById("questions-container");
+            questionsContainer.innerHTML = ""; // Clear existing questions
+
+            if (toggle.checked) {
+                generateForm(questionsMalay);
+            } else {
+                generateForm(questions);
+            }
+        });
+
+        window.onload = generateForm(questionChose);
     </script>
 </body>
 </html>
