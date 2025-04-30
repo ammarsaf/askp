@@ -210,30 +210,12 @@
     </div>
 
     <!--- Javascript -->
-    <script type="module" src="./features.js">
-        import {
-            submitForm, 
-            displayStatistics, 
-            downloadCsv, 
-            generateForm, 
-            questions, 
-            questionsMalay} from './features.js';
-        
-        const toggle = document.getElementById("languageToggle");
-        const questionChose = questions;
-
-        toggle.addEventListener('change', () => {
-            const questionsContainer = document.getElementById("questions-container");
-            questionsContainer.innerHTML = ""; // Clear existing questions
-
-            if (toggle.checked) {
-                generateForm(questionsMalay);
-            } else {
-                generateForm(questions);
-            }
-        });
-
-        window.onload = generateForm(questionChose);
+    <script type="module" src="./features.js"></script>
+    <script type="module">
+        import { initialize, submitForm, downloadCsv} from './features.js';
+        document.addEventListener('DOMContentLoaded', initialize);
+        window.submitForm = submitForm;
+        window.downloadCsv = downloadCsv;
     </script>
 </body>
 </html>

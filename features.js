@@ -356,18 +356,22 @@ export function downloadCsv() {
     link.click();
 }
 
-export const toggle = document.getElementById("languageToggle");
-const questionChose = questions;
+export function initialize() {
+    const toggle = document.getElementById("languageToggle");
+    const questionChose = questions;
 
-toggle.addEventListener('change', () => {
-    const questionsContainer = document.getElementById("questions-container");
-    questionsContainer.innerHTML = ""; // Clear existing questions
+    if (toggle) { // Check if toggle element exists
+        toggle.addEventListener('change', () => {
+            const questionsContainer = document.getElementById("questions-container");
+            questionsContainer.innerHTML = ""; // Clear existing questions
 
-    if (toggle.checked) {
-        generateForm(questionsMalay);
-    } else {
-        generateForm(questions);
+            if (toggle.checked) {
+                generateForm(questionsMalay);
+            } else {
+                generateForm(questions);
+            }
+        });
     }
-});
 
-window.onload = generateForm(questionChose);
+    generateForm(questionChose);
+}
