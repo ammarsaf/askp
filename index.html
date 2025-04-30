@@ -143,8 +143,9 @@
         transform: translateX(30px);
         }
 
-        span {
-            color: #7952b3;;
+        .qtag {
+            color: #7952b3;
+            font-size:medium;
         }
 
 
@@ -439,41 +440,46 @@
         }
         const arrTags = Object.entries(questionTags);
 
+        console.log(arrTags)
+
         function generateForm(questionChose) {
             const questionsContainer = document.getElementById("questions-container");
+            questionsContainer.innerHTML = ""; // Clear existing questions
 
             questionChose.forEach((question, index) => {
                 const questionDiv = document.createElement("div");
                 questionDiv.classList.add("question");
-                
-                arrTags.forEach(function(questionNum) {
-                    
-                    if (questionNum[1].includes(index+1)) {
-                        questionDiv.innerHTML = `
-                        <label for="question-${index}">
-                            ${index + 1}. ${question} 
-                        </label>
-                        <span style = "display:flex; justify-content:flex-end">${questionNum[0]}</span>
-                        <div>
-                            <label><input type="radio" name="rating-${index}" value="1">1</label>
-                            <label><input type="radio" name="rating-${index}" value="2">2</label>
-                            <label><input type="radio" name="rating-${index}" value="3">3</label>
-                            <label><input type="radio" name="rating-${index}" value="4">4</label>
-                            <label><input type="radio" name="rating-${index}" value="5">5</label>
-                        </div>
-                        <select name="tag-${index}">
-                            <option value="Tolerable">Tolerable</option>
-                            <option value="Non-tolerable">Non-tolerable</option>
-                            <option value="None">None</option>
-                        </select>
-                    `;
-                    questionsContainer.appendChild(questionDiv);
-                    }
 
-                    
+                let qtagHtml = '';
+                arrTags.forEach(function(questionNum) {
+                    if (questionNum[1].includes(index + 1)) {
+                        qtagHtml = `
+                <div class="qtag" style = "display:flex; justify-content:flex-end" name="qtag-${questionNum[0]}">
+                    ${questionNum[0]}
+                </div>`;
+                    }
+                });
+
+                questionDiv.innerHTML = `
+            <label for="question-${index}">
+                ${index + 1}. ${question}
+            </label>
+            ${qtagHtml}
+            <div>
+                <label><input type="radio" name="rating-${index}" value="1">1</label>
+                <label><input type="radio" name="rating-${index}" value="2">2</label>
+                <label><input type="radio" name="rating-${index}" value="3">3</label>
+                <label><input type="radio" name="rating-${index}" value="4">4</label>
+                <label><input type="radio" name="rating-${index}" value="5">5</label>
+            </div>
+            <select name="tag-${index}">
+                <option value="Tolerable">Tolerable</option>
+                <option value="Non-tolerable">Non-tolerable</option>
+                <option value="None">None</option>
+            </select>
+        `;
+                questionsContainer.appendChild(questionDiv);
             });
-            
-        });
         }
 
         function submitForm() {
@@ -538,7 +544,15 @@
             for (let i = 0; i < questions.length; i++) {
                 const rating = form.querySelector(`input[name="rating-${i}"]:checked`)?.value || "";
                 const tag = document.querySelector(`select[name="tag-${i}"]`).value || "";
-                csvContent += `"${questions[i]}","${rating}","${tag}"\r\n`;
+
+                arrTags.forEach(function(questionNum) {
+                        if (questionsNum[1].includes(i+1)) {
+                            const qtagfind = document.querySelector(`select[qtag-${questionNum[0]}`)
+                        }
+                })
+
+                const qtag = qtagfind;
+                csvContent += `"${questions[i]}","${rating}","${tag}","${qtag}\r\n`;
             }
             var encodedUri = encodeURI(csvContent);
             var link = document.createElement("a");
