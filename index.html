@@ -440,7 +440,14 @@
         }
         const arrTags = Object.entries(questionTags);
 
-        console.log(arrTags)
+        // Flattening for easy process on CSV
+        const arrTagsFlattened = {};
+        for (const [category, numbers] of Object.entries(questionTags)) {
+            for (const number of numbers) {
+                arrTagsFlattened[number] = category;
+            }
+        }
+
 
         function generateForm(questionChose) {
             const questionsContainer = document.getElementById("questions-container");
@@ -540,19 +547,19 @@
         function downloadCsv() {
             const form = document.getElementById("questionnaire-form");
             let csvContent = "data:text/csv;charset=utf-8,";
-            csvContent += "Question,Rating,Tag\r\n";
+            csvContent += "Question,Rating,Impact,Tag\r\n";
             for (let i = 0; i < questions.length; i++) {
                 const rating = form.querySelector(`input[name="rating-${i}"]:checked`)?.value || "";
                 const tag = document.querySelector(`select[name="tag-${i}"]`).value || "";
 
-                arrTags.forEach(function(questionNum) {
-                        if (questionsNum[1].includes(i+1)) {
-                            const qtagfind = document.querySelector(`select[qtag-${questionNum[0]}`)
-                        }
-                })
-
-                const qtag = qtagfind;
-                csvContent += `"${questions[i]}","${rating}","${tag}","${qtag}\r\n`;
+                // let qtagfind = ""
+                // arrTags.forEach(function(questionNum) {
+                //         if (questionsNum[1].includes(i+1)) {
+                //             qtagfind = document.querySelector(`select[qtag-${questionNum[0]}`)
+                //         }
+                // })
+                // const qtag = qtagfind;
+                csvContent += `"${questions[i]}","${rating}","${tag}","${arrTagsFlattened[i+1]}"\r\n`;
             }
             var encodedUri = encodeURI(csvContent);
             var link = document.createElement("a");
