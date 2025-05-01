@@ -7,9 +7,11 @@
 
 - add more statistical view 
     - highest percentage score for every tags
-    - pie chart
+    - tags spider chart
     - percentage score of every tags
 
 - add llm assistance output to help decision making
     - suitable system prompt
     - disclaimer
+
+- adding more test 
