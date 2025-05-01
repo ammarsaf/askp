@@ -6,9 +6,8 @@
 # more features plan
 
 - add more statistical view 
-    - highest percentage score for every tags
     - tags spider chart
-    - percentage score of every tags
+    - percentage score of every impact
 
 - add llm assistance output to help decision making
     - suitable system prompt
