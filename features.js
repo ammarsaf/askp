@@ -347,6 +347,7 @@ export function displayStatistics() {
         }
         statisticsContainer.append(tagContainer)
     }
+    console.log(tagCounts)
 }
 
 export function downloadCsv() {
