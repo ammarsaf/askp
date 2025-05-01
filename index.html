@@ -28,6 +28,10 @@
             text-align: center;
         }
 
+        h3 {
+            text-align: center;
+        }
+
         .question {
             margin-bottom: 20px;
             padding: 15px;
@@ -89,22 +93,30 @@
 
         #chart-container {
             display: flex;
+            align-items: center;
+            align-content: center;
             justify-content: center;
             flex-direction: row;
-            justify-content: space-around;
             flex-wrap: wrap;
             margin-top: 20px;
             padding: 15px;
             border: 1px solid #d0bfff;
             border-radius: 10px;
             background-color: #f9f0ff;
-            gap: 10px;
+            gap: 100px;
+        }
+
+        .title-canvas {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            flex-wrap: wrap;
         }
 
         .chart-canvas {
-            width:1000; /* Occupy the full width of the parent */
+            width:400; /* Occupy the full width of the parent */
             min-width: 0; /* Allow the canvas to shrink to zero width */
-            height: 1000; /* Fill the container height initially */
+            height: 400; /* Fill the container height initially */
         }
 
         div.context {
@@ -236,8 +248,15 @@
     <h2> Chart </h2>
     <div id="chart-container">
         <!---Chart container-->
-        <canvas class="chart-canvas" id="radar-canvas-tolerable" width="500" height="500"></canvas> 
-        <canvas class="chart-canvas" id="radar-canvas-nontolerable" width="500" height="500"></canvas> 
+        <div class="title-canvas">
+            <h3>Tolerable</h3>
+            <canvas class="chart-canvas" id="radar-canvas-tolerable" width="390" height="500"></canvas> 
+        </div>
+        <div class="title-canvas"><h3>Non-Tolerable</h3>
+            <canvas class="chart-canvas" id="radar-canvas-nontolerable" width="390" height="500"></canvas> 
+        </div>
+    </div>
+        
 
 
     </div>
@@ -253,8 +272,10 @@
         document.addEventListener('DOMContentLoaded', initialize);
         window.submitForm = submitForm; // to be accesible globally from the on-click
         window.downloadCsv = downloadCsv;
-        drawRadarChart("radar-canvas-tolerable");
-        drawRadarChart("radar-canvas-nontolerable");
+
+        const scores = [1, 2, 3, 4, 5]; // Replace with dynamic data if needed
+        drawRadarChart("radar-canvas-tolerable", scores);
+        drawRadarChart("radar-canvas-nontolerable", scores);
 
     </script>
 </body>

@@ -44,11 +44,11 @@ function drawAxes(centerX, centerY, ctx, maxRadius) {
   }
 }
 
-function drawDataPolygon(centerX, centerY, ctx, maxRadius) {
+function drawDataPolygon(centerX, centerY, ctx, maxRadius, inputScore) {
   ctx.beginPath();
-  for (let i = 0; i < scores.length; i++) {
+  for (let i = 0; i < inputScore.length; i++) {
     const angle = (Math.PI * 2 / labels.length) * i - Math.PI / 2;
-    const value = scores[i] / 5; // Normalize to 0–1
+    const value = inputScore[i] / 5; // Normalize to 0–1
     const r = maxRadius * value;
     const x = centerX + r * Math.cos(angle);
     const y = centerY + r * Math.sin(angle);
@@ -66,10 +66,10 @@ function drawDataPolygon(centerX, centerY, ctx, maxRadius) {
   ctx.fill();
 }
 
-function drawPoints(centerX, centerY, ctx, maxRadius) {
-  for (let i = 0; i < scores.length; i++) {
+function drawPoints(centerX, centerY, ctx, maxRadius, inputScore) {
+  for (let i = 0; i < inputScore.length; i++) {
     const angle = (Math.PI * 2 / labels.length) * i - Math.PI / 2;
-    const value = scores[i] / 5;
+    const value = inputScore[i] / 5;
     const r = maxRadius * value;
     const x = centerX + r * Math.cos(angle);
     const y = centerY + r * Math.sin(angle);
@@ -86,9 +86,9 @@ function drawPoints(centerX, centerY, ctx, maxRadius) {
 
 const averageScore = 3; // Adjust this to scale the scores
 const labels = ["Score 1", "Score 2", "Score 3", "Score 4", "Score 5"];
-const scores = [1, 2, 3, 4, 5]; // Replace with dynamic data if needed
 
-export function drawRadarChart(chartid) {
+
+export function drawRadarChart(chartid, inputScore) {
   const canvas = document.getElementById(chartid);
   const ctx = canvas.getContext("2d");
   const centerX = canvas.width / 2;
@@ -99,8 +99,8 @@ export function drawRadarChart(chartid) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawGrid(centerX, centerY, ctx, maxRadius, levels);
   drawAxes(centerX, centerY, ctx, maxRadius);
-  drawDataPolygon(centerX, centerY, ctx, maxRadius);
-  drawPoints(centerX, centerY, ctx, maxRadius);
+  drawDataPolygon(centerX, centerY, ctx, maxRadius, inputScore);
+  drawPoints(centerX, centerY, ctx, maxRadius, inputScore);
 }
 
 // drawRadarChart();
