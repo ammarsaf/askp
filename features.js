@@ -1,4 +1,4 @@
-export const questions = [
+export const questionsTest = [
     "What is your concept of marriage?",
     "Have you ever been married before?",
     "Are you married now?",
@@ -100,6 +100,14 @@ export const questions = [
     "What type of relationship do you want your children to have with all of their grandparents?",
     "If there are members of my family that are not Muslim, that are of a different culture or race, what type of relationship do you want to have with them?"
 ];
+
+export const questions = [
+    "Do you have children now?",
+    "What is your relationship with your children, now?",
+    "What is your relationship with their parent, now?",
+    "What relationship do you expect your spouse to have with your children and their parent?",
+    "What is the best method of raising children?",
+]
 
 export const questionsMalay =    [
     "Apakah konsep anda tentang perkahwinan?",
@@ -281,14 +289,20 @@ export function submitForm() {
     validationMessage.textContent = "";
     const form = document.getElementById("questionnaire-form");
     let allQuestionsAnswered = true;
+
+    
     for (let i = 0; i < questions.length; i++) {
         const rating = form.querySelector(`input[name="rating-${i}"]:checked`);
         const tag = form.querySelector(`select[name="tag-${i}"]`).value;
+        console.log(rating)
+        console.log(tag)
         if (!rating || tag === "") {
             validationMessage.textContent = `Please answer question ${i + 1}.`;
             allQuestionsAnswered = false;
             break;
         }
+        
+
     }
     if (allQuestionsAnswered) {
         displayStatistics();
@@ -315,19 +329,23 @@ export function displayStatistics() {
     });
 
     const statisticsContainer = document.getElementById("statistics-container");
-    statisticsContainer.innerHTML = "<h2>Statistics</h2>";
+    statisticsContainer.innerHTML = ""
 
     for (const tag in tagCounts) {
+        const tagContainer = document.createElement(`${tag}-container`);
+
         const total = Object.values(tagCounts[tag]).reduce((a, b) => a + b, 0);
+
         if (total > 0) {
-            statisticsContainer.innerHTML += `<h3>${tag}</h3>`;
+            tagContainer.innerHTML += `<h3>${tag}</h3>`;
             for (let i = 1; i <= 5; i++) {
                 const percentage = (tagCounts[tag][i] / total) * 100;
-                statisticsContainer.innerHTML += `<p>Score ${i}: <strong>${percentage.toFixed(2)}%<strong></p>`;
+                tagContainer.innerHTML += `<p>Score ${i}: <strong>${percentage.toFixed(2)}%<strong></p>`;
             }
         } else {
-            statisticsContainer.innerHTML += `<h3>${tag}</h3><p>No data for this tag.</p>`;
+            tagContainer.innerHTML += `<h3>${tag}</h3><p>No data for this tag.</p>`;
         }
+        statisticsContainer.append(tagContainer)
     }
 }
 
