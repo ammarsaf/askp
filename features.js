@@ -1,4 +1,6 @@
-export const questionsTest = [
+import { drawRadarChart } from './radarchart.js';
+
+export const questions = [
     "What is your concept of marriage?",
     "Have you ever been married before?",
     "Are you married now?",
@@ -101,12 +103,27 @@ export const questionsTest = [
     "If there are members of my family that are not Muslim, that are of a different culture or race, what type of relationship do you want to have with them?"
 ];
 
-export const questions = [
+export const questionT = [
+    "What is your concept of marriage?",
+    "Have you ever been married before?",
+    "Are you married now?",
+    "What are your expectations of marriage?",
+    "What are your goals in life? Long term and short term plans.",
+    "Identify three things that you want to accomplish in the near future.",
+    "Identify three things that you want to accomplish, long-term.",
+    "Why have you chosen me as your potential spouse?",
+    "What is the role of religion in your life – now?",
+    "Are you a spiritual person?",
+    "To the best of your understanding, are you able to have children?",
+    "Do you want to have children in the first two years of marriage? If not, then when?",
+    "Do you believe in abortion in you family?",
     "Do you have children now?",
     "What is your relationship with your children, now?",
     "What is your relationship with their parent, now?",
     "What relationship do you expect your spouse to have with your children and their parent?",
     "What is the best method of raising children?",
+    "What is the best method of disciplining children?",
+    "How were you raised?",
 ]
 
 export const questionsMalay =    [
@@ -294,8 +311,6 @@ export function submitForm() {
     for (let i = 0; i < questions.length; i++) {
         const rating = form.querySelector(`input[name="rating-${i}"]:checked`);
         const tag = form.querySelector(`select[name="tag-${i}"]`).value;
-        console.log(rating)
-        console.log(tag)
         if (!rating || tag === "") {
             validationMessage.textContent = `Please answer question ${i + 1}.`;
             allQuestionsAnswered = false;
@@ -308,7 +323,6 @@ export function submitForm() {
         displayStatistics();
     }
 }
-
 export function displayStatistics() {
     const form = document.getElementById("questionnaire-form");
     const answers = [];
@@ -347,8 +361,33 @@ export function displayStatistics() {
         }
         statisticsContainer.append(tagContainer)
     }
+
+    let normalizeScore = {}
+    for (const tag in tagCounts) { 
+        normalizeScore[tag] = []
+        for (const score in tagCounts[tag]) {
+            let questionAmount = Object.values(tagCounts[tag]).reduce(sum_val, 0);
+            console.log(questionAmount)
+            let normalizeOut = normalizeTheScore(tagCounts[tag][score], questionAmount);
+            normalizeScore[tag].push(normalizeOut)
+        }
+    }
     console.log(tagCounts)
+    console.log(normalizeScore)
+    drawRadarChart("radar-canvas-tolerable", normalizeScore['Tolerable']);
+    drawRadarChart("radar-canvas-nontolerable", normalizeScore['Non-tolerable']);
+
+
 }
+
+export function normalizeTheScore(input, totalquestion) {
+    return (input / totalquestion) * 5
+}
+
+function sum_val (a, b) {
+    return a + b;
+}
+
 
 export function downloadCsv() {
     const form = document.getElementById("questionnaire-form");

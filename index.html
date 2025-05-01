@@ -272,10 +272,11 @@
         document.addEventListener('DOMContentLoaded', initialize);
         window.submitForm = submitForm; // to be accesible globally from the on-click
         window.downloadCsv = downloadCsv;
-
-        const scores = [1, 2, 3, 4, 5]; // Replace with dynamic data if needed
-        drawRadarChart("radar-canvas-tolerable", scores);
-        drawRadarChart("radar-canvas-nontolerable", scores);
+        //const latest = getLatestTagCount();
+        //console.log(latest)
+        const scores = [4, 5, 5, 4, 5]; // Replace with dynamic data if needed
+        //drawRadarChart("radar-canvas-tolerable", scores);
+        //drawRadarChart("radar-canvas-nontolerable", scores);
 
     </script>
 </body>
