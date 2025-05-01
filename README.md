@@ -5,9 +5,6 @@
 
 # more features plan
 
-- add more statistical view 
-    - tags spider chart
-    - percentage score of every impact
 
 - add llm assistance output to help decision making
     - suitable system prompt
