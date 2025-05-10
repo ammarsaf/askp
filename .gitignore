@@ -1,1 +1,7 @@
-node_modules
+# Local configuration
+src/config.local.js
+
+# Other common ignores
+node_modules/
+.DS_Store
+*.log

@@ -1,4 +1,6 @@
 // src/analyse-questions.js
+import config from './config.js';
+
 export async function analyzeQuestion(answers) {
   try {
     console.log('Sending request with answers:', answers);
@@ -16,9 +18,7 @@ export async function analyzeQuestion(answers) {
     
     console.log('Request options:', requestOptions);
     
-    // const response = await fetch('https://manjaddawajadda.manfdvcl9.workers.dev/', requestOptions);
-    const response = await fetch('https://mawaddah-ai-worker.manfdvcl9.workers.dev/', requestOptions);
-    
+    const response = await fetch(config.API_URL, requestOptions);
     
     console.log('Response status:', response.status);
     console.log('Response headers:', Object.fromEntries(response.headers.entries()));
