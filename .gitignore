@@ -1,5 +1,3 @@
-# Local configuration
-src/config.local.js
 
 # Other common ignores
 node_modules/

@@ -18,6 +18,7 @@ export async function analyzeQuestion(answers) {
     
     console.log('Request options:', requestOptions);
     
+    
     const response = await fetch(config.API_URL, requestOptions);
     
     console.log('Response status:', response.status);
