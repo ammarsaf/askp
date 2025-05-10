@@ -6,8 +6,13 @@
 # more features plan
 
 
-- add llm assistance output to help decision making
+- Add llm assistance output to help decision making
     - suitable system prompt
     - disclaimer
 
+- For deployment instructions and setup details for the CloudFlare AI worker backend:
+  - See `wrangler.md` for step-by-step configuration
+  - Includes environment setup, API keys, and deployment commands
+
 - adding more test 
+

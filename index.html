@@ -256,8 +256,17 @@
             <canvas class="chart-canvas" id="radar-canvas-nontolerable" width="390" height="500"></canvas> 
         </div>
     </div>
-        
 
+    <!-- AI Analysis  -->
+    <div>
+        <h2>AI Analysis</h2>
+        <div id="chart-container">
+            <div class="title-canvas">
+                <input type="file" id="csvInput" accept=".csv" />
+                <div id="analysis-container"></div>
+            </div>
+        </div>
+    </div>
 
     </div>
     </div>
@@ -266,6 +275,9 @@
     <!--- Javascript -->
     <script type="module" src="./features.js"></script>
     <script type="module" src="./radarchart.js"></script>
+    <script type="module" src="./src/analysis-ui.js"></script>
+    <script type="module" src="./src/analyse-questions.js"></script>
+
     <script type="module">
         import { initialize, submitForm, downloadCsv} from './features.js';
         import { drawRadarChart } from './radarchart.js';
