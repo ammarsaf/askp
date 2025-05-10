@@ -1,3 +1,4 @@
+// features.js
 import { drawRadarChart } from './radarchart.js';
 
 export const questions = [
@@ -287,7 +288,7 @@ export function generateForm(questionChose) {
     <div>
         <label><input type="radio" name="rating-${index}" value="1">1</label>
         <label><input type="radio" name="rating-${index}" value="2">2</label>
-        <label><input type="radio" name="rating-${index}" value="3">3</label>
+        <label><input type="radio" name="rating-${index}" value="3" checked>3</label>
         <label><input type="radio" name="rating-${index}" value="4">4</label>
         <label><input type="radio" name="rating-${index}" value="5">5</label>
     </div>
