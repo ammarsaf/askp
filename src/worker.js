@@ -1,22 +1,21 @@
 // src/worker.js
 
 export default {
-  // the fetch entrypoint
   async fetch(request, env) {
     const CORS = {
-      "Access-Control-Allow-Origin":     "*",              // dev; lock down in prod
+      "Access-Control-Allow-Origin":     "*",              // dev; replace "*" with your origin in prod
       "Access-Control-Allow-Methods":    "GET,HEAD,POST,OPTIONS",
       "Access-Control-Allow-Headers":    "Content-Type",
       "Access-Control-Max-Age":          "86400",
       "Access-Control-Allow-Credentials":"true"
     };
 
-    // 1) Preflight
+    // 1) Preflight OPTIONS
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: CORS });
     }
 
-    // 2) Only POST
+    // 2) Only POST allowed
     if (request.method !== "POST") {
       return new Response("Method Not Allowed", {
         status: 405,
@@ -24,74 +23,45 @@ export default {
       });
     }
 
-    // 3) Parse JSON
+    // 3) Parse JSON body
     let answers;
     try {
       const { answers: a } = await request.json();
       if (!Array.isArray(a)) throw new Error("`answers` must be an array");
       answers = a;
-    } catch (e) {
-      return new Response(JSON.stringify({ error: e.message }), {
+    } catch (err) {
+      return new Response(JSON.stringify({ error: err.message }), {
         status: 400,
         headers: { ...CORS, "Content-Type": "application/json" }
       });
     }
 
-    // 4) Analyze
-    let analysis;
+    // 4) Build a prompt from the answers
+    const prompt = `
+You are an expert premarital counselor. Here are question‐answer summaries:
+${answers.map((ans, i) => `• Q${i+1}: rating ${ans.rating}, tag ${ans.tag}`).join("\n")}
+Please analyze these and return a concise summary highlighting key concerns and strengths.
+`;
+
+    // 5) Call the AI model
+    let aiResponse;
     try {
-      analysis = await runAnalysis(answers);
-    } catch (e) {
-      return new Response(JSON.stringify({ error: e.message }), {
+      aiResponse = await env.AI.run(
+        "@cf/meta/llama-3-8b-instruct",
+        { prompt }
+      );
+    } catch (err) {
+      return new Response(JSON.stringify({ error: err.message }), {
         status: 500,
         headers: { ...CORS, "Content-Type": "application/json" }
       });
     }
 
-    // 5) Respond
+    // 6) Return the model’s response
+    const analysis = aiResponse.response ?? aiResponse;
     return new Response(JSON.stringify({ analysis }), {
       status: 200,
       headers: { ...CORS, "Content-Type": "application/json" }
     });
   }
 };
-
-
-async function runAnalysis(answers) {
-  // Group ratings by tag
-  const grouped = answers.reduce((acc, { tag, rating }) => {
-    acc[tag] = acc[tag] || [];
-    acc[tag].push(rating);
-    return acc;
-  }, {});
-
-  // Compute averages
-  const averages = {};
-  for (const [tag, ratings] of Object.entries(grouped)) {
-    averages[tag] = ratings.reduce((s, r) => s + r, 0) / ratings.length;
-  }
-
-  // Build summary
-  let text = "Based on your questionnaire answers:\n\n";
-  if (averages["Tolerable"] != null) {
-    const avg = averages["Tolerable"].toFixed(1);
-    text += `Tolerable avg: ${avg}/5 — `
-      + (avg >= 4 ? "strong agreement.\n"
-        : avg <= 2 ? "significant disagreement.\n"
-        : "moderate agreement.\n");
-  }
-  if (averages["Non-tolerable"] != null) {
-    const avg = averages["Non-tolerable"].toFixed(1);
-    text += `Non-tolerable avg: ${avg}/5 — `
-      + (avg >= 4 ? "strong alignment.\n"
-        : avg <= 2 ? "areas of concern.\n"
-        : "moderate alignment.\n");
-  }
-  text += "\nRecommendations:\n"
-    + "1. Discuss <3 items with partner.\n"
-    + "2. Explore Non-tolerable reasons.\n"
-    + "3. Reflect on Tolerable impacts.\n"
-    + "4. Use as a conversation starter.\n";
-
-  return text;
-}
