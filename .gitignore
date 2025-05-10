@@ -5,3 +5,5 @@ src/config.local.js
 node_modules/
 .DS_Store
 *.log
+.wrangler/
+.wrangler/tmp/
