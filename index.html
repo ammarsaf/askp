@@ -106,6 +106,22 @@
             gap: 100px;
         }
 
+        #chart-container-col {
+            display: flex;
+            align-items: center;
+            align-content: start;
+            justify-content: center;
+            flex-direction: column;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #d0bfff;
+            border-radius: 10px;
+            background-color: #f9f0ff;
+            gap: 100px;
+        }
+
+
         .title-canvas {
             display: flex;
             justify-content: center;
@@ -267,6 +283,32 @@
             </div>
         </div>
     </div>
+        </div>
+    </div>
+    <!--LLM Output-->
+    <div>
+        <h2>LLM Coach Assistant</h2>
+    </div>
+        <button type="button" onclick="submitForLLM('hello')">Upload CSV</button>
+        <div id="chart-container-col">
+            <div id="thought">
+                Thought:
+                <div class="llm-output"></div>
+            </div>
+            <div>
+                Positive:
+                <div class="llm-output"></div>
+            </div>
+            <div>
+                Negative:
+                <div class="llm-output"></div>
+            </div>
+            <div>
+                Result:
+                <div class="llm-output"></div>
+            </div>
+        </div>
+
 
     </div>
     </div>
@@ -278,12 +320,15 @@
     <script type="module" src="./src/analysis-ui.js"></script>
     <script type="module" src="./src/analyse-questions.js"></script>
 
+    <script type="module" src="./prompt.js"></script>
     <script type="module">
-        import { initialize, submitForm, downloadCsv} from './features.js';
+        import { initialize, submitForm, downloadCsv, submitForLLM} from './features.js';
         import { drawRadarChart } from './radarchart.js';
+        // import { mySystemPrompt } from './prompt.js';
         document.addEventListener('DOMContentLoaded', initialize);
         window.submitForm = submitForm; // to be accesible globally from the on-click
         window.downloadCsv = downloadCsv;
+        window.submitForLLM = submitForLLM;
         //const latest = getLatestTagCount();
         //console.log(latest)
         const scores = [4, 5, 5, 4, 5]; // Replace with dynamic data if needed
