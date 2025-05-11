@@ -293,7 +293,7 @@ export function generateForm(questionChose) {
     <div>
         <label><input type="radio" name="rating-${index}" value="1">1</label>
         <label><input type="radio" name="rating-${index}" value="2">2</label>
-        <label><input type="radio" name="rating-${index}" value="3" checked>3</label>
+        <label><input type="radio" name="rating-${index}" value="3">3</label>
         <label><input type="radio" name="rating-${index}" value="4">4</label>
         <label><input type="radio" name="rating-${index}" value="5">5</label>
     </div>
@@ -420,58 +420,6 @@ export function downloadCsv() {
     link.click();
 }
 
-
-export async function submitForLLM(userPrompt) {
-    const API_BASE_URL = "https://api.cloudflare.com/client/v4/accounts/5fae56503922ba90e98f0fc606623b3b/ai/run/";
-    const API_AUTH_TOKEN = "PXU_Azq7X03Wt3_X8yy7ThaL-xBkHYdqGj9vf_yU";
-    const model = "@cf/meta/llama-2-7b-chat-int8";
-
-
-    // Simplified CORS headers - only what you need to send
-    const headers = {
-        'Authorization': `Bearer ${API_AUTH_TOKEN}`,
-        'Content-Type': 'application/json'
-    };
-
-    console.log(headers.Authorization)
-
-
-    if (!API_BASE_URL || !API_AUTH_TOKEN) {
-        throw new Error('API credential is wrong or not configured from Github Action');
-    }
-
-    const inputs = [
-        {'role': 'system', 'content': systemPrompt},
-        {'role': 'user', 'content': userPrompt},
-    ];
-
-    const payload = {
-        messages: inputs
-    };
-
-    try {
-        console.log("Requesting to LLM...");
-        const response = await fetch(`${API_BASE_URL}${model}`, {
-            method: 'POST',
-            headers: headers,
-            body: JSON.stringify(payload)
-        });
-
-        if (!response.ok) {
-            throw new Error(`Error request from LLM: ${response.status}`);
-        }
-
-        console.log("Requesting completed. Waiting for output...");
-        const output = await response.json();
-        console.log(output);
-
-        const thought = document.getElementById("thought");
-        thought.innerHTML = output.result.response; // Adjust based on actual response structure
-    } catch (error) {
-        console.log("API Error", error);
-        throw error;
-    }
-}
 
 export function initialize() {
     const toggle = document.getElementById("languageToggle");
