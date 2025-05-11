@@ -24,7 +24,7 @@ export async function analyzeQuestion(answers) {
       console.log('Response headers:', Object.fromEntries(response.headers.entries()));
     }
     catch(err) {
-      console.log('test')
+      console.log(err)
       console.log(`Fetching error: ${err}`)
     }
     
