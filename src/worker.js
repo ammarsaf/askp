@@ -1,5 +1,7 @@
 // src/worker.js
 
+import { systemPrompt } from "./prompts";
+
 export default {
   async fetch(request, env) {
     const CORS = {
@@ -37,10 +39,12 @@ export default {
     }
 
     // 4) Build a prompt from the answers
-    const prompt = `
-You are an expert premarital counselor. Here are question‐answer summaries:
-${answers.map((ans, i) => `• Q${i+1}: rating ${ans.rating}, tag ${ans.tag}`).join("\n")}
-Please analyze these and return a concise summary highlighting key concerns and strengths.
+    const prompt = systemPrompt + `\n
+    Here is the input:
+    ${answers.map((ans, i) => `• Q${i+1}: rating ${ans.rating}, tag ${ans.tag}`).join("\n")}
+
+    Return answer in JSON format. Do not initialize the output with your thought or end it with overall
+    conclusion. Start with '{' and end with '}'
 `;
 
     // 5) Call the AI model

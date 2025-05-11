@@ -16,9 +16,46 @@ async function handleCsvUpload(evt) {
   });
 
   const analysis = await analyzeQuestion(answers);
-  const container = document.getElementById('analysis-container');
-  container.textContent = analysis || 'No analysis returned.';
   console.log(analysis)
+  
+  try {
+    const analysisJson = JSON.parse(analysis);
+    const thoughtOuput = analysisJson['Thought'];
+    const positiveOuput = analysisJson['Positive'];
+    const negativeOuput = analysisJson['Negative'];
+    const resultOuput = analysisJson['Result'];
+    // const container = document.getElementById('analysis-container');
+    const containerThought = document.getElementById('thought-output');
+    const containerPositive = document.getElementById('positive-output');
+    const containerNegative = document.getElementById('negative-output');
+    const containerResult = document.getElementById('result-output');
+    //container.textContent = analysis || 'No analysis returned.';
+    containerThought.textContent = thoughtOuput || 'No analysis returned.';
+    containerPositive.textContent = positiveOuput || 'No analysis returned.';
+    containerNegative.textContent = negativeOuput || 'No analysis returned.';
+    containerResult.textContent = resultOuput || 'No analysis returned.';
+  }
+  catch {
+    const thoughtOuput = 'Failed to analyze. Please upload the file again.'
+    const positiveOuput = 'Failed to analyze. Please upload the file again.'
+    const negativeOuput = 'Failed to analyze. Please upload the file again.'
+    const resultOuput = 'Failed to analyze. Please upload the file again.'
+    // const container = document.getElementById('analysis-container');
+    const containerThought = document.getElementById('thought-output');
+    const containerPositive = document.getElementById('positive-output');
+    const containerNegative = document.getElementById('negative-output');
+    const containerResult = document.getElementById('result-output');
+    //container.textContent = analysis || 'No analysis returned.';
+    containerThought.textContent = thoughtOuput
+    containerPositive.textContent = positiveOuput
+    containerNegative.textContent = negativeOuput
+    containerResult.textContent = resultOuput
+  }
+  
+
+  
+
+
 }
 
 document
