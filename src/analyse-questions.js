@@ -18,12 +18,16 @@ export async function analyzeQuestion(answers) {
     
     console.log('Request options:', requestOptions);
     
+    try {
+      const response = await fetch(config.API_URL, requestOptions);
+      console.log('Response status:', response.status);
+      console.log('Response headers:', Object.fromEntries(response.headers.entries()));
+    }
+    catch(err) {
+      console.log(`Fetching error: ${err}`)
+    }
     
-    const response = await fetch(config.API_URL, requestOptions);
     
-    console.log('Response status:', response.status);
-    console.log('Response headers:', Object.fromEntries(response.headers.entries()));
-
     if (!response.ok) {
       const errorText = await response.text();
       console.error('Error response:', errorText);
