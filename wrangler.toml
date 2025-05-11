@@ -1,0 +1,6 @@
+name = "mawaddah-ai-worker"
+main = "src/worker.js"
+compatibility_date = "2025-05-10"
+
+[ai]
+binding = "AI"

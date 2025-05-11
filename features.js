@@ -1,4 +1,10 @@
+// features.js
 import { drawRadarChart } from './radarchart.js';
+import { systemPrompt } from './prompt.js';
+// import 'dotenv/config';
+// console.log(process.env.API_BASE_URL);
+
+
 
 export const questions = [
     "What is your concept of marriage?",
@@ -413,6 +419,7 @@ export function downloadCsv() {
     document.body.appendChild(link);
     link.click();
 }
+
 
 export function initialize() {
     const toggle = document.getElementById("languageToggle");
