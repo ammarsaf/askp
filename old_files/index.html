@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marriage Questionnaire</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2e7fe; /* Light purple background */
+            color: #333;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #d0bfff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        h1 {
+            color: #7952b3; /* Dark purple heading */
+            text-align: center;
+        }
+
+        h3 {
+            text-align: center;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #d0bfff;
+            border-radius: 10px;
+            background-color: #f9f0ff; /* Lighter purple question background */
+        }
+
+        .question label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        select {
+            padding: 8px;
+            border: 1px solid #d0bfff;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #7952b3; /* Dark purple button */
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #6741a5;
+        }
+
+        .validation-message {
+            color: #dc3545;
+            margin-top: 10px;
+        }
+
+        #statistics-container {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #d0bfff;
+            border-radius: 10px;
+            background-color: #f9f0ff;
+        }
+
+        #chart-container {
+            display: flex;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+            flex-direction: row;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #d0bfff;
+            border-radius: 10px;
+            background-color: #f9f0ff;
+            gap: 100px;
+        }
+
+        #llm-analysis-container {
+            display: flex;
+            align-items: start;
+            align-content: start;
+            flex-direction: row;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #d0bfff;
+            border-radius: 10px;
+            background-color: #f9f0ff;
+
+        }
+
+        #llm-output-container {
+            display: flex;
+            flex: 1 0 0;
+            min-width: 0;
+            align-items: start;
+            align-content: start;
+            justify-content: start;
+            flex-direction: column;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #d0bfff;
+            border-radius: 10px;
+            background-color: #f9f0ff;
+            gap: 40px;
+        }
+
+
+        .title-canvas {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            flex-wrap: wrap;
+        }
+
+        .chart-canvas {
+            width:400; /* Occupy the full width of the parent */
+            min-width: 0; /* Allow the canvas to shrink to zero width */
+            height: 400; /* Fill the container height initially */
+        }
+
+        div.context {
+            color: #7952b3; /* Dark purple heading */
+            text-align:center;
+        }
+
+        /* Media query for responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+        }
+
+        .toggle-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 30px;
+        }
+
+        .slider:before {
+        position: absolute;
+        content: "";
+        height: 22px;
+        width: 22px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color:  #7952b3;;
+        }
+
+        input:checked + .slider:before {
+        transform: translateX(30px);
+        }
+
+        .qtag {
+            color: #7952b3;
+            font-size:medium;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+    <h1>Hundred Pre-Marital Marriage Questionnaire</h1>
+    <div class="context">
+        <p>
+            Guide your talking stage phase with a crucial questionnaire to deeply understand
+            your partner, before moving forwards in your <i>marriage</i> journey.
+        </p>
+        <p>
+            The scoring spectrum might be different for everyone. You can define 
+            <strong>1 as Strongly Disagree</strong> and <strong>5 Strongly Agree</strong>.
+        </p>
+        <p>
+            The impact indicator have options of <strong>Tolerable</strong>, <strong>Non-tolerable</strong>, 
+            and <strong>None</strong>. Use this to indicate how important is the question topic for your marriage.
+        </p>
+
+        <p>
+            If you choose Tolerable with score 1, it means the topic would not impact your future marriage very much. 
+            However, if the question is Non-tolerable with score 1, it means the issue will significantly impact you.
+            Watch <a href="https://www.youtube.com/watch?v=yi7a83TYyUs&ab_channel=AimanAzlan%7CTaarufCoach">this</a>
+            to have a better understanding.
+        </p>
+        <p>
+            After completing all the questions, 
+            you can get the statistical view of the answers and download the file 
+            for your reference. Remember to use this as a guidance, not as the decision maker. 
+        </p>
+        <p>
+            After all, you need to listen to yourself and pray for the best. Good luck.
+        </p>    
+        <a href="https://www.rahmaa.org/resources/100-questions-by-imam-magid/"> Source </a>
+    </div><br><br>
+
+
+    <div class="toggle-container">
+        <label class="switch">
+            <input type="checkbox" id="languageToggle">
+            <span class="slider"></span>
+        </label>
+            <span>Bahasa Melayu</span>
+        </div>
+    <br>
+
+
+    <form id="questionnaire-form">
+        <div id="questions-container">
+            <!-- Questions will be dynamically added here -->
+        </div>
+        <button type="button" onclick="submitForm()">Submit</button>
+        <button type="button" onclick="downloadCsv()">Download CSV</button>
+    </form>
+    <div id="validation-message" class="validation-message"></div>
+    <h2>Statistics</h2>
+    <div id="statistics-container">
+        <!-- Statistics will be displayed here -->
+    </div>
+    <h2> Chart </h2>
+    <div id="chart-container">
+        <!---Chart container-->
+        <div class="title-canvas">
+            <h3>Tolerable</h3>
+            <canvas class="chart-canvas" id="radar-canvas-tolerable" width="390" height="500"></canvas> 
+        </div>
+        <div class="title-canvas"><h3>Non-Tolerable</h3>
+            <canvas class="chart-canvas" id="radar-canvas-nontolerable" width="390" height="500"></canvas> 
+        </div>
+    </div>
+
+    <!-- AI Analysis  -->
+    <div>
+        <h2>AI Analysis</h2>
+        <div id="llm-analysis-container">
+            <div class="title-canvas">
+                <input type="file" id="csvInput" accept=".csv" />
+                <div id="llm-output-container">
+                    <div><strong>Thought:</strong><div id="thought-output"></div></div>
+                    <div><strong>Positive:</strong><div id="positive-output"></div></div>
+                    <div><strong>Negative:</strong><div id="negative-output"></div></div>
+                    <div><strong>Result:</strong><div id="result-output"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    
+
+    <!--- Javascript -->
+    <script type="module" src="./features.js"></script>
+    <script type="module" src="./radarchart.js"></script>
+    <script type="module" src="./src/analysis-ui.js"></script>
+    <script type="module" src="./src/analyse-questions.js"></script>
+
+    <script type="module" src="./prompt.js"></script>
+    <script type="module">
+        import { initialize, submitForm, downloadCsv} from './features.js';
+        import { drawRadarChart } from './radarchart.js';
+        // import { mySystemPrompt } from './prompt.js';
+        document.addEventListener('DOMContentLoaded', initialize);
+        window.submitForm = submitForm; // to be accesible globally from the on-click
+        window.downloadCsv = downloadCsv;
+        //const latest = getLatestTagCount();
+        //console.log(latest)
+        const scores = [4, 5, 5, 4, 5]; // Replace with dynamic data if needed
+        //drawRadarChart("radar-canvas-tolerable", scores);
+        //drawRadarChart("radar-canvas-nontolerable", scores);
+
+    </script>
+</body>
+</html>
