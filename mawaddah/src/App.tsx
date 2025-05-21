@@ -1,6 +1,7 @@
 import { NavBar } from '../components/NavBar';
 import { Footer } from '../components/Footer';
 import { FlashCard } from '../components/FlashCard';
+import { AnswerRadio } from '../components/Radio';
 import { QuestionPagination } from '../components/QuestionsPagination';
 import { Questions } from './MarriageQuestions';
 
@@ -11,13 +12,17 @@ const App = () => {
     <>
       <NavBar />
       {Questions.map((q, index) => (
-        <FlashCard
-          id={index + 1}
-          questionEng={q.questionEng}
-          questionMy={q.questionMalay}
-          tag={q.questionTag}
-        />
+        <>
+          <FlashCard
+            id={q.id}
+            questionEng={q.questionEng}
+            questionMy={q.questionMalay}
+            tag={q.questionTag}
+          />
+          <AnswerRadio id={q.id} />
+        </>
       ))}
+
       <QuestionPagination />
       <Footer />
     </>
