@@ -11,7 +11,7 @@ const App = () => {
   return (
     <>
       <NavBar />
-      {Questions.map((q, index) => (
+      {Questions.map((q) => (
         <>
           <FlashCard
             id={q.id}
@@ -19,7 +19,7 @@ const App = () => {
             questionMy={q.questionMalay}
             tag={q.questionTag}
           />
-          <AnswerRadio id={q.id} />
+          <AnswerRadio questionId={q.id} />
         </>
       ))}
 

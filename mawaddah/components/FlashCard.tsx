@@ -1,11 +1,11 @@
 interface Props {
-  id: string;
+  id: number;
   questionEng: string;
   questionMy: string;
   tag: string;
 }
 
-export const FlashCard = ({ id, questionEng, questionMy, tag }: Props) => {
+export const FlashCard: React.FC<Props> = ({ id, questionEng, questionMy, tag }: Props) => {
   return (
     <>
       <div className="flex justify-center">
