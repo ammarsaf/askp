@@ -1,7 +1,9 @@
 import { NavBar } from '../components/NavBar';
-import { Footer } from '../components/Footer';
 import { AnswerRadio } from '../components/Radio';
 import { CarouselQuestion } from '../components/Carousel';
+import { PageTabs } from '../components/Tabs';
+import { SelectImpact } from '../components/SelectImpact';
+
 import { Questions } from './MarriageQuestions';
 
 import 'tailwindcss';
@@ -11,6 +13,8 @@ const App = () => {
     <>
       <div className="bg-white mx-100 my-10 p-10 rounded-md shadow-md">
         <NavBar />
+        <PageTabs />
+
         {/* <FlashCard
             id={q.id}
             questionEng={q.questionEng}
@@ -18,6 +22,7 @@ const App = () => {
             tag={q.questionTag}
           /> */}
         <CarouselQuestion allData={Questions} />
+        <SelectImpact />
         <AnswerRadio />
       </div>
     </>
