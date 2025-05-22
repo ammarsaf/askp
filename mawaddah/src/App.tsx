@@ -2,6 +2,7 @@ import { NavBar } from '../components/NavBar';
 import { Footer } from '../components/Footer';
 import { FlashCard } from '../components/FlashCard';
 import { AnswerRadio } from '../components/Radio';
+import { CarouselQuestion } from '../components/Carousel';
 import { QuestionPagination } from '../components/QuestionsPagination';
 import { Questions } from './MarriageQuestions';
 
@@ -11,19 +12,14 @@ const App = () => {
   return (
     <>
       <NavBar />
-      {Questions.map((q) => (
-        <>
-          <FlashCard
+      {/* <FlashCard
             id={q.id}
             questionEng={q.questionEng}
             questionMy={q.questionMalay}
             tag={q.questionTag}
-          />
-          <AnswerRadio questionId={q.id} />
-        </>
-      ))}
-
-      <QuestionPagination />
+          /> */}
+      <CarouselQuestion allData={Questions} />
+      <AnswerRadio />
       <Footer />
     </>
   );

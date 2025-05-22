@@ -6,13 +6,12 @@ interface Props {
   questionId: number;
 }
 
-export const AnswerRadio: React.FC<Props> = ({ questionId }: Props) => {
+export const AnswerRadio = () => {
   return (
-    <div className="flex justify-center" data-id={questionId}>
+    <div className="flex justify-center">
       <RadioGroup
         className="flex justify-around m-10 gap-10 border-1 rounded-md p-2
-        [&:not(:first-child)]:mt-6 w-200"
-        defaultValue="option-one"
+        [&:not(:first-child)]:mt-6 w-150"
       >
         <div className="flex items-center space-x-2">
           <RadioGroupItem value="option-one" id="option-one" />
