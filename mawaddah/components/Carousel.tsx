@@ -26,7 +26,7 @@ export function CarouselQuestion({ allData }: Props) {
         {allData.map((data, index) => (
           <CarouselItem key={index}>
             <div className="p-1">
-              <Card>
+              <Card className="bg-purple-100">
                 <CardContent className="flex flex-col aspect-square items-start justify-center p-6">
                   <span className="text-xl font-semibold">
                     {data.questionEng}

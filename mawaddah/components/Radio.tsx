@@ -11,7 +11,7 @@ export const AnswerRadio = () => {
     <div className="flex justify-center">
       <RadioGroup
         className="flex justify-around m-10 gap-10 border-1 rounded-md p-2
-        [&:not(:first-child)]:mt-6 w-150"
+        [&:not(:first-child)]:mt-6 w-150 bg-purple-100"
       >
         <div className="flex items-center space-x-2">
           <RadioGroupItem value="option-one" id="option-one" />
