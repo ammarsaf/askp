@@ -13,8 +13,8 @@ import {
 export function SelectImpact() {
   return (
     <Select>
-      <SelectTrigger className="w-[180px] max-w-xl flex justify-center mx-auto bg-purple-100 mt-10">
-        <SelectValue placeholder="Select Impact" />
+      <SelectTrigger className="w-[180px] max-w-xl flex justify-center mx-auto bg-purple-100 mt-5">
+        <SelectValue placeholder="Select " />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
